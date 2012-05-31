@@ -1,0 +1,71 @@
+/**
+ * The primary CSS file for the StyledFileInput widget.
+ *
+ * @version		1.0
+ */
+
+/**
+ * The original input[type=file] element, with a 'styled_file_input' class, will
+ * be given a pointer, position absolutely, with 0 opacity/alpha. Default 16px
+ * tall with 14px line height for vertical-align.
+ */
+input[type=file].styled_file_input {
+	position:absolute;
+	z-index:-1;
+	cursor:pointer;
+	line-height: 14px;
+	height:16px;
+	opacity:0;
+	/* For IE7 */
+	zoom:1;
+	*display:inline;
+	filter:alpha(opacity=0);
+	/* For IE8 */
+	-ms-filter:"progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+}
+
+/**
+ * The replacement widget element will have the same height and line-height
+ * as the original select element, and be displayed inline-block.
+ */
+div.styled_file_input {
+	position:relative;
+	vertical-align:bottom;
+	cursor:pointer;
+	display:inline-block;
+	height:16px;
+	line-height: 14px;
+	/* For IE7 */
+	zoom:1;
+	*display:inline;
+	/* For IE7 and IE8 */
+	*line-height:16px;
+}
+
+/**
+ * The span element that displays the file name should be 90% as wide as its parent
+ * element, 100% as tall, with overflow hidden, displayed as a block element.
+ */
+div.styled_file_input span.styled_file_input_filename {
+	position:relative;
+	left:2px;
+	overflow:hidden;
+	display:block;
+	width:90%;
+	height:100%;
+}
+
+/**
+ * The button that has the 'Browse...' text should be relatively positioned 4px
+ * from the rights die of the 'styled_file_input' and be displayed inline-block.
+ */
+div.styled_file_input + button.styled_file_input_browse_btn {
+	position:relative;
+	vertical-align:bottom;
+	left:4px;
+	cursor:pointer;
+	display:inline-block;
+	/* For IE7 */
+	zoom:1;
+	*display:inline;
+}
