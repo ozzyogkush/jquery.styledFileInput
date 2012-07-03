@@ -21,10 +21,12 @@
  * 	extended element, with or without any special options. Required options:
  * 		styled_file_id		the ID of the new element that will be created
  * 
+ * @changelog	1.0.1 -	bug fix: using jQueryUI will no longer stop the widget from working
+ * 
  * @example		See example.html
  * @class		StyledFileInput
  * @name		StyledFileInput
- * @version		1.0
+ * @version		1.0.1
  * @author		Derek Rosenzweig <derek.rosenzweig@gmail.com, drosenzweig@riccagroup.com>
  */
 (function($) {
@@ -128,6 +130,7 @@
 		 * @access		public
 		 * @memberOf	StyledFileInput
 		 * @since		1.0
+		 * @updated		1.0.1
 		 */
 		this.initStyledFileInput = function() {
 			// First check for valid 'styled_file_id' option.
@@ -170,16 +173,31 @@
 			
 			if (options.use_jquery_ui == true && $.ui !== undefined) {
 				// If jQueryUI is being used, turn the browse button into a jQueryUI Button element
-				browse_button.button();
+				browse_button.button().on('click', this.triggerLinkedInputBoxClick);
+			}
+			else {
+				browse_button.on('click', this.triggerLinkedInputBoxClick);
 			}
 			
 			// Add the event handler(s).
-			replacement_container_div.on('click', function() { linked_file_input_box.trigger('click'); });
-			browse_button.on('click', function() { linked_file_input_box.trigger('click'); });
+			replacement_container_div.on('click', this.triggerLinkedInputBoxClick);
 			linked_file_input_box.on('change', this.setCurrentFileNameText);
 		}
 		
 		/********* Event handlers *********/
+		
+		/**
+		 * Triggers the 'click' event on the original linked file input box.
+		 *
+		 * @public
+		 * @memberOf	StyledFileInput
+		 * @since		1.0.1
+		 *
+		 * @param		click_event			jQuery.Event				jQuery 'click' Event
+		 */
+		this.triggerLinkedInputBoxClick = function(click_event) {
+			linked_file_input_box.focus().trigger('click');
+		}
 		
 		/**
 		 * When the user selects a file from the dialog box, it will update the
